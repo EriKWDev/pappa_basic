@@ -1,0 +1,70 @@
+<html><head>
+<title>Basic in C</title>
+</head>
+<body>
+<p>
+<h1>Basic as internal language for the camera</h1>
+
+<h2>Why Basic</h2>
+When deciding which language to put in the camera we were considering
+a lot of different languages. Selecting Basic may sound quite strange,
+but after looking into various possiblibities this was the choice. Of
+course all the code for the camera is written in C++ and C.
+<p>
+We were considering the following langueges:
+<ul>
+<li><b>'C'</b>. This is far too complex to make an embedded compiler for.
+<li><b>perl</b>. Perl with it's dynamic and extremly flexible syntax would
+have made it idea - especially since it is common for CGI:scripts. But for
+this camera it simply wouldn't make it.
+<li><b>'TCL'</b>. This language is not well spread enough and it is not easy
+enough to learn for a beginner.
+<li><b>'Proprietary script'</b>. This was really the option, but writing a
+basic interpreter is much more generic. It is also quite common in industrial
+and measurment applications still today.
+</ul>
+The advantages of Basic is it's ease of writing (and extending) the interpreter.
+We based it on an old interpreter that I had written in 1982, converted that
+over to C, and the first version was running the very same day in C!. Then
+we extended the basic with labels, to get rid of the line-numbers in goto,
+gosub e t c (yes, you can still use them, but you get a warning!).
+
+
+<h2>Internal file format</h2>
+The internal fileformat is defined with the following tokens:
+<ul>
+<li><b>0x32</b> Two byte integer. Internally it calculates with 32 bit variables, but to save memory space it may be stored as 2 bytes only.
+<li><b>0x34</b> Four byte integer. Internally it calculates with 32 bit variables, but to save memory space it may be stored as 2 bytes only.
+<li><b>0x0a</b> End of Line delimiter.
+<li><b>0x41-0x58</b> Integer variable.
+<li><b>0x61-0x78</b> String variable.
+<li><b>0x80-0xff</b> Token for "something". See
+<a href = "/~martin/cprog/basic/words">here</a> for which tokens we have.
+These tokens are compiled by the
+<a href = "/~martin/cprog/basic/fixcom.pl">fixcom.pl perl script</a> into the
+two files
+<a href = "/~martin/cprog/basic/commands.h"> commands.h</a> and
+<a href = "/~martin/cprog/basic/codes.h">codes.h</a> which define all the
+tokens.
+</ul>
+<h2>Source code of the basic:</h2>
+<ul>
+<li><a href = "/~martin/cprog/basic/mgmon.c">The interface to the basic.</a>
+Contains MG monitor, which is interface to the basic.
+<li><a href = "/~martin/cprog/basic/basic.c">Runtime of the basic.</a>
+ Contains the run module, as well as the string handling, 'list', 'run' command
+decode.
+<li><a href = "/~martin/cprog/basic/expr.c">Integer Expression analyzer</a>. This analyzes a mathematical expression and returns it's value. Only available for
+integers (32 bit), but can easily be made for float as well. Simple form, the
+drawback is that it generates minimum 5 procedure calls and for a simple
+addition 5 + 5 calls.
+<li><a href = "/~martin/cprog/basic/compline.c"> This is the compile one line
+block</a>, which also list one line.
+</ul>
+More to come....
+<p>
+
+<a href="/axis/dept/tech/martin.html">Webbed by: Martin Gren</a> Tue Jan 16 10:35:14 MET 1996
+
+</body>
+</html>
