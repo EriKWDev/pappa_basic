@@ -1,0 +1,87 @@
+#
+# Commands for Camera Basic
+# MG Jan 5, 1996
+#
+for
+to
+step
+next
+label
+goto
+gosub
+input
+print
+let
+rem
+if
+then
+else
+end
+stop
+data
+read
+poke
+return
+restore
+dim
+get
+while
+wend
+open
+close
+remove
+#
+# Functions:
+#
+and
+or
+xor
+>=
+<=
+<>
+<
+>
+=
+-
++
+/
+*
+,
+;
+(
+)
+abs
+sgn
+rnd
+call
+peek
+len
+asc
+instr
+mid$
+right$
+left$
+second
+hour
+minute
+time
+#
+# Operating system commands:
+#
+ls
+mv
+rm
+cp
+save
+load
+cd
+pwd
+cat
+run     # Run a batch program
+list    # List the current program
+status  # Current status of running programs
+#
+# Commands for the camera basic
+#
+dcvalue # Gives the DC value at a certain position
+common  # For common shared variables

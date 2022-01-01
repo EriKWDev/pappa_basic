@@ -1,0 +1,93 @@
+#
+# Commands for Camera Basic
+# MG Jan 5, 1996
+#
+for   FOR
+to    TO
+step  STEP
+next  NEXT
+label
+goto  GOTO
+gosub  GOSUB
+input  INPUT
+print PRINT
+let   LET
+rem   REM
+if    IF
+then  THEN
+else  ELSE
+end
+stop
+poke
+data  DATA
+return
+restore
+dim  DIM
+while WHILE
+wend  WEND
+open  OPEN
+close   CLOSE
+remove
+#
+# Functions:
+#
+and   AND
+or    OR
+xor   XOR
+>=    GTE
+<=    LTE
+<     LT
+>     GT
+=     EQ
+<>    NEQ
+-     MINUS
++     PLUS
+/     DIV
+*     MUL
+,     COMMA
+;     SEMICOLON
+(     LEFTPAR
+)     RIGHTPAR
+get   GET
+abs   ABS
+sgn   SGN
+rnd   RND
+call  CALL
+peek  PEEK
+read  READ
+len   LEN
+asc   ASC
+dec   DEC
+instr  INSTR
+mid$   MID
+right$ RIGHT
+left$  LEFT
+hex$   HEX
+chr$   CHR
+num$   NUM
+second  SECOND
+minute  MINUTE
+hour    HOUR
+time    TIME
+#
+# Operating system commands:
+#
+ls
+mv
+rm
+cp
+save
+load
+cd
+pwd
+cat
+run     # Run a batch program
+list    # List the current program
+status  # Current status of running programs
+#
+# Commands for the camera basic
+#
+# Gives the DC value at a certain position
+dcvalue  DCVALUE
+# For common shared variables
+common

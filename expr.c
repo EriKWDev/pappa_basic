@@ -14,100 +14,116 @@
 int int_expr(pnt)
 unsigned char **pnt;
 {
-   int i;
-   i = int_expr2(pnt);
-   while(1 == 1)
-   {
-     switch(**pnt)
-     {
-       case AND:    (*pnt)++;
-                    i = i & int_expr2(pnt);
-                    continue;
-       case OR:     (*pnt)++;
-                    i = i | int_expr2(pnt);
-                    continue;
-       default:     return(i);
-     }
-   }
+  int i;
+  i = int_expr2(pnt);
+  while (1 == 1)
+  {
+    switch (**pnt)
+    {
+    case AND:
+      (*pnt)++;
+      i = i & int_expr2(pnt);
+      continue;
+    case OR:
+      (*pnt)++;
+      i = i | int_expr2(pnt);
+      continue;
+    default:
+      return (i);
+    }
+  }
 }
 
 int int_expr2(pnt)
 unsigned char **pnt;
 {
-   int i;
-   i = int_expr3(pnt);
-   while (1 == 1)
-   {
-     switch(**pnt)
-     {
-       case EQ:     (*pnt)++;
-                    i = i == int_expr3(pnt);
-                    continue;
-       case NEQ:    (*pnt)++;
-                    i = i != int_expr3(pnt);
-                    continue;
-       case LT:     (*pnt)++;
-                    i = i < int_expr3(pnt);
-                    continue;
-       case GT:     (*pnt)++;
-                    i = i > int_expr3(pnt);
-                    continue;
-       case LTE:    (*pnt)++;
-                    i = i <= int_expr3(pnt);
-                    continue;
-       case GTE:    (*pnt)++;
-                    i = i >= int_expr3(pnt);
-                    continue;
-       default:     return(i);
-     }
-   }
+  int i;
+  i = int_expr3(pnt);
+  while (1 == 1)
+  {
+    switch (**pnt)
+    {
+    case EQ:
+      (*pnt)++;
+      i = i == int_expr3(pnt);
+      continue;
+    case NEQ:
+      (*pnt)++;
+      i = i != int_expr3(pnt);
+      continue;
+    case LT:
+      (*pnt)++;
+      i = i < int_expr3(pnt);
+      continue;
+    case GT:
+      (*pnt)++;
+      i = i > int_expr3(pnt);
+      continue;
+    case LTE:
+      (*pnt)++;
+      i = i <= int_expr3(pnt);
+      continue;
+    case GTE:
+      (*pnt)++;
+      i = i >= int_expr3(pnt);
+      continue;
+    default:
+      return (i);
+    }
+  }
 }
 
 int int_expr3(pnt)
 unsigned char **pnt;
 {
-   int i;
-   i = int_expr4(pnt);
-   while(1 == 1)
-   {
-     switch(**pnt)
-     {
-       case PLUS:   (*pnt)++;
-                    i += int_expr4(pnt);
-                    continue;
-       case MINUS:  (*pnt)++;
-                    i -= int_expr4(pnt);
-                    continue;
-       default:     return(i);
-     }
-   }
+  int i;
+  i = int_expr4(pnt);
+  while (1 == 1)
+  {
+    switch (**pnt)
+    {
+    case PLUS:
+      (*pnt)++;
+      i += int_expr4(pnt);
+      continue;
+    case MINUS:
+      (*pnt)++;
+      i -= int_expr4(pnt);
+      continue;
+    default:
+      return (i);
+    }
+  }
 }
 
 int int_expr4(pnt)
 unsigned char **pnt;
 {
-   int i, j;
-   i = int_expval(pnt);
-   while(1 == 1)
-   {
-     switch(**pnt)
-     {
-       case MUL:    (*pnt)++;
-                    i *= int_expval(pnt);
-                    continue;
-       case DIV:    (*pnt)++;
-                    j = int_expval(pnt);
-                    if (j == 0)
-                    {
-                      error("Div 0");
-                      return(0);
-                    }
-                    else
-                      i = i / j;
-                    continue;
-       default:     return(i);
-     }
-   }
+  int i, j;
+  i = int_expval(pnt);
+  while (1 == 1)
+  {
+    switch (**pnt)
+    {
+    case MUL:
+      (*pnt)++;
+      i *= int_expval(pnt);
+      continue;
+    case DIV:
+      (*pnt)++;
+      j = int_expval(pnt);
+      if (j == 0)
+      {
+        error("Div 0");
+        return (0);
+      }
+      else
+        i = i / j;
+      continue;
+    default:
+      return (i);
+    }
+  }
 }
 
 /*
@@ -126,7 +142,7 @@ unsigned char **pnt;
     i = *(*pnt + 1) << 8;
     i += *(*pnt + 2);
     *pnt += 3;
-    return(i);
+    return (i);
   }
   if (func == '4')
   {
@@ -135,43 +151,48 @@ unsigned char **pnt;
     i += *(*pnt + 3) << 8;
     i += *(*pnt + 4);
     *pnt += 5;
-    return(i);
+    return (i);
   }
   if (func == '(')
-    return(int_parfunc(pnt));
-/*
- * Handle functions. Enter your function in the case-statement.
- */
+    return (int_parfunc(pnt));
+  /*
+   * Handle functions. Enter your function in the case-statement.
+   */
   if (func >= 0x80)
   {
     (*pnt)++;
-    switch(func)
+    switch (func)
     {
-      case MINUS: return(0 - int_expr(pnt));
-      case SGN: i = int_parfunc(pnt);
-                if (i == 0)
-                   return(0);
-                if (i > 0)
-                   return(1);
-                return(-1);
-      case ABS: i = int_parfunc(pnt);
-                if (i < 0)
-                   i = 0 - i;
-                return(i);
-      case GET: return(getchr());
-      case PEEK: i = int_parfunc(pnt);
-                return(i);
-      default:  
-                printf("Func %02x, %02x %x\n", func, **pnt, *pnt);
-                error("Not implemented function");
-                return(0);
+    case MINUS:
+      return (0 - int_expr(pnt));
+    case SGN:
+      i = int_parfunc(pnt);
+      if (i == 0)
+        return (0);
+      if (i > 0)
+        return (1);
+      return (-1);
+    case ABS:
+      i = int_parfunc(pnt);
+      if (i < 0)
+        i = 0 - i;
+      return (i);
+    case GET:
+      return (getchr());
+    case PEEK:
+      i = int_parfunc(pnt);
+      return (i);
+    default:
+      printf("Func %02x, %02x %x\n", func, **pnt, *pnt);
+      error("Not implemented function");
+      return (0);
     }
   }
   if (**pnt >= 0x40)
   {
     i = vars[**pnt - 'A'];
     (*pnt)++;
-    return(i);
+    return (i);
   }
 }
 /*
@@ -187,12 +208,12 @@ byte **pnt;
   if (**pnt != '(')
   {
     error("Missing '('");
-    return(0);
+    return (0);
   }
   (*pnt)++;
   i = int_expr(pnt);
   if (**pnt != ')')
-     error("Missing ')'");
+    error("Missing ')'");
   (*pnt)++;
-  return(i);
+  return (i);
 }
